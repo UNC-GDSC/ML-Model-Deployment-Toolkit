@@ -1,0 +1,103 @@
+# Canary deployment configuration for gradual rollouts
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ml-model-canary
+  labels:
+    app: ml-model
+    version: canary
+spec:
+  replicas: 1  # Start with small number
+  selector:
+    matchLabels:
+      app: ml-model
+      version: canary
+  template:
+    metadata:
+      labels:
+        app: ml-model
+        version: canary
+    spec:
+      containers:
+      - name: ml-model
+        image: ${CONTAINER_REGISTRY}/ml-model:${CANARY_VERSION}
+        ports:
+        - containerPort: 8080
+          name: http
+        env:
+        - name: MODEL_PATH
+          value: "/models/model.pkl"
+        - name: MODEL_VERSION
+          value: "2.0.0"  # New version
+        - name: MODEL_TYPE
+          value: "sklearn"
+        - name: DEPLOYMENT_TYPE
+          value: "canary"
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        volumeMounts:
+        - name: model-storage
+          mountPath: /models
+          readOnly: true
+      volumes:
+      - name: model-storage
+        persistentVolumeClaim:
+          claimName: ml-model-pvc
+---
+# VirtualService for traffic splitting (requires Istio)
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: ml-model-vs
+spec:
+  hosts:
+  - ml-model-service
+  http:
+  - match:
+    - headers:
+        x-version:
+          exact: canary
+    route:
+    - destination:
+        host: ml-model-service
+        subset: canary
+  - route:
+    - destination:
+        host: ml-model-service
+        subset: stable
+      weight: 90
+    - destination:
+        host: ml-model-service
+        subset: canary
+      weight: 10  # 10% traffic to canary
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: ml-model-dr
+spec:
+  host: ml-model-service
+  subsets:
+  - name: stable
+    labels:
+      version: v1
+  - name: canary
+    labels:
+      version: canary
