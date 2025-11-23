@@ -1,0 +1,37 @@
+# Vercel ignore file
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Testing
+.pytest_cache/
+tests/
+
+# Documentation
+docs/
+*.md
+!README.md
+
+# Development
+.git/
+.gitignore
+
+# Large files (use external storage for large models)
+*.h5
+*.pb
+*.pth
+*.pt

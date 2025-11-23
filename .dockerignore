@@ -1,0 +1,73 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Documentation
+docs/
+*.md
+!README.md
+
+# CI/CD
+.github/
+
+# Development
+.env
+.env.local
+*.env
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Models (if large)
+# Uncomment if you want to exclude models from Docker builds
+# models/
+# *.pkl
+# *.h5
+# *.pt
+# *.pth
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+
+# Node modules (for Vercel)
+node_modules/

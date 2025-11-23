@@ -1,0 +1,44 @@
+{
+  "version": 2,
+  "name": "ml-model-deployment",
+  "builds": [
+    {
+      "src": "api/*.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "50mb"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/",
+      "dest": "/api/health.py"
+    },
+    {
+      "src": "/health",
+      "dest": "/api/health.py"
+    },
+    {
+      "src": "/predict",
+      "methods": ["POST"],
+      "dest": "/api/predict.py"
+    },
+    {
+      "src": "/info",
+      "dest": "/api/info.py"
+    }
+  ],
+  "env": {
+    "MODEL_VERSION": "1.0.0",
+    "MODEL_TYPE": "sklearn",
+    "LOG_LEVEL": "INFO"
+  },
+  "regions": ["iad1"],
+  "functions": {
+    "api/*.py": {
+      "memory": 1024,
+      "maxDuration": 10
+    }
+  }
+}
