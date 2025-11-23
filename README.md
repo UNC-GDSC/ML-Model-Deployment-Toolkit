@@ -1,13 +1,13 @@
 # ML Model Deployment Toolkit
 
-A comprehensive, production-ready toolkit for deploying machine learning models to AWS Lambda, GCP Cloud Run, and Vercel. This toolkit provides everything you need to deploy ML models at scale with best practices built-in.
+A comprehensive, production-ready toolkit for deploying machine learning models to AWS Lambda, AWS SageMaker, GCP Cloud Run, Azure Functions, Kubernetes, and Vercel. This toolkit provides everything you need to deploy ML models at scale with best practices built-in.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 
 ## Features
 
-- 🚀 **Multi-Platform Support**: Deploy to AWS Lambda, GCP Cloud Run, or Vercel
+- 🚀 **Multi-Platform Support**: Deploy to AWS Lambda, AWS SageMaker, GCP Cloud Run, Azure Functions, Kubernetes, or Vercel
 - 🔧 **Framework Agnostic**: Works with TensorFlow, PyTorch, scikit-learn, and more
 - 📦 **Production Ready**: Includes monitoring, logging, error handling, and security
 - 🐳 **Containerized**: Docker support for consistent deployments
@@ -92,6 +92,27 @@ ml-deploy vercel --model-path ./models/my_model.pkl --name my-model
 - Built-in CDN
 - Perfect for lightweight models
 - Simple deployment workflow
+
+### AWS SageMaker
+- Fully managed ML infrastructure
+- Auto-scaling with target tracking
+- Built-in A/B testing support
+- Model monitoring and data capture
+- Multi-model endpoints
+
+### Kubernetes
+- Self-hosted or cloud-managed clusters
+- Horizontal pod auto-scaling
+- Rolling updates and canary deployments
+- Service mesh integration (Istio)
+- Maximum control and flexibility
+
+### Azure Functions
+- Serverless compute on Azure
+- Multiple trigger types (HTTP, queue, blob)
+- Azure Monitor integration
+- Easy integration with Azure ecosystem
+- Cost-effective for event-driven workloads
 
 ## Project Structure
 
